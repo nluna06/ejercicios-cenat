@@ -3,7 +3,7 @@
 #include "mpi.h"
 #include <math.h>
 #include <stdbool.h>
-
+#include <omp.h>
 
 bool primo (int n) {
         int i;
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 	}
 		
 	total = cont;
-	
+	#pragma omp atomic
     total += 1;    /* Acrescenta o dois, que também é primo */
 	printf("Quant. de primos entre 1 e n: %d \n", total);
 
