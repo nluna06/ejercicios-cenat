@@ -1,5 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include "mpi.h"
+#include <omp.h>
 
 using namespace std;
 
@@ -8,11 +10,16 @@ void sum(char* output, const long unsigned int d, const long unsigned int n) {
 	for (long unsigned int digit = 0; digit < d + 11; ++digit) {
 		digits[digit] = 0;
 	}
+
+
+#pragma omp parallel for private(i, remainder, digit)
 	for (long unsigned int i = 1; i <= n; ++i) {
 		long unsigned int remainder = 1;
 		for (long unsigned int digit = 0; digit < d + 11 && remainder; ++digit) {
 			long unsigned int div = remainder / i;
 			long unsigned int mod = remainder % i;
+               
+                        #pragma omp atomic
 			digits[digit] += div;
 			remainder = mod * 10;
 		}
