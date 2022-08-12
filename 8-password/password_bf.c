@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <openssl/md5.h>
 #include <string.h>
+#include <omp>
 
 #define MAX 10
 
@@ -14,7 +15,7 @@ char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 */
 void print_digest(byte * hash){
 	int x;
-
+#pragma omp parallel for private()
 	for(x = 0; x < MD5_DIGEST_LENGTH; x++)
         	printf("%02x", hash[x]);
 	printf("\n");
